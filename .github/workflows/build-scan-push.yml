@@ -24,8 +24,14 @@ jobs:
 
       - name: Release
         uses: liatrio/github-actions/conventional-release@master
+        with:
+          debug: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Echo tags
+        run: |
+          echo ${{ steps.Release.outputs.newVersion }}
 
     outputs:
       changed: ${{ steps.Release.outputs.changed }}
