@@ -23,6 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Release
+        id: release
         uses: liatrio/github-actions/conventional-release@master
         with:
           debug: true
@@ -31,11 +32,11 @@ jobs:
 
       - name: Echo tags
         run: |
-          echo ${{ steps.Release.outputs.newVersion }}
+          echo ${{ steps.release.outputs.newVersion }}
 
     outputs:
-      changed: ${{ steps.Release.outputs.changed }}
-      newVersion: ${{ steps.Release.outputs.newVersion }}
+      changed: ${{ steps.release.outputs.changed }}
+      newVersion: ${{ steps.release.outputs.newVersion }}
 
   build:
     needs: release
