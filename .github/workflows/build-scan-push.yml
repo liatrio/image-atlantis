@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build, Scan, Push
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@fix-scan-workflow
+    with:
+      publish: ${{ github.ref == 'refs/heads/master' }}
+      repository: ghcr.io/liatrio
+      registry-username: ${{ github.repository_owner }}
+      registry-password: ${{ secrets.GITHUB_TOKEN }}
+      tag: ${{ github.ref }}
+      image-name: ${{ github.event.repository.name }}
