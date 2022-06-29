@@ -15,11 +15,12 @@ on:
 
 jobs:
   build:
-    uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@fix-scan-workflow
+    uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@main
     with:
       publish: ${{ github.ref == 'refs/heads/master' }}
       repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
-      registry-password: ${{ secrets.GITHUB_TOKEN }}
       tag: ${{ github.ref }}
       image-name: ${{ github.event.repository.name }}
+    secrets:
+      registry-password: ${{ secrets.GITHUB_TOKEN }}
