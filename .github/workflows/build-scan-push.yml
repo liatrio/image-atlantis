@@ -32,11 +32,11 @@ jobs:
 
       - name: Echo tags
         run: |
-          echo ${{ toJson(steps.tag.output) }}
+          echo ${{ steps.tag.outputs }}
 
     outputs:
-      changed: ${{ steps.tag.output.changed }}
-      newVersion: ${{ steps.tag.output.newVersion }}
+      changed: ${{ steps.tag.outputs.changed }}
+      newVersion: ${{ steps.tag.outputs.newVersion }}
 
   build:
     needs: release
