@@ -17,25 +17,26 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      # you'll need to add an `id` in order to access output variables
-      - uses: codfish/semantic-release-action@v1
-        id: semantic
+      - name: Release
+        id: tag
+        uses: liatrio/github-actions/conventional-release@master
+        with:
+          debug: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: echo ${{ steps.semantic.outputs.release-version }}
+      - name: Echo tags
+        run: |
+          echo ${{ toJson(steps.tag.output) }}
 
-      - run: echo "$OUTPUTS"
-        env:
-          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
-
-      - uses: codfish/some-other-action@v1
-        with:
-          release-version: ${{ steps.semantic.outputs.release-version }}
-
+    outputs:
+      changed: ${{ steps.tag.output.changed }}
+      newVersion: ${{ steps.tag.output.newVersion }}
 
   build:
     needs: release
@@ -45,7 +46,7 @@ jobs:
       publish: ${{ github.ref == 'refs/heads/master' }}
       repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
-      tag: ${{ steps.semantic.outputs.release-version }}
+      tag: ${{ needs.release.outputs.newVersion }}
       image-name: ${{ github.event.repository.name }}
     secrets:
       registry-password: ${{ secrets.GITHUB_TOKEN }}
