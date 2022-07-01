@@ -46,7 +46,7 @@ jobs:
       publish: ${{ github.ref == 'refs/heads/master' }}
       repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
-      tag: ${{ needs.release.outputs.newVersion }}
+      tag: latest
       image-name: ${{ github.event.repository.name }}
     secrets:
       registry-password: ${{ secrets.GITHUB_TOKEN }}
