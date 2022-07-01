@@ -1,4 +1,4 @@
-FROM ghcr.io/runatlantis/atlantis:v0.19.3
+FROM ghcr.io/runatlantis/atlantis:v0.19.4
 
 RUN apk add --no-cache aws-cli
 
