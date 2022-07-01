@@ -23,24 +23,23 @@ jobs:
           fetch-depth: 0
 
       - name: Release
-        id: tag
         uses: liatrio/github-actions/conventional-release@master
         with:
           debug: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Echo tags
+      - name: Get Release Tag
+        id: tag
         run: |
-          echo ${{ steps.tag.outputs }}
+          echo ::set-output name=newVersion::$(git tag --points-at HEAD)
 
     outputs:
-      changed: ${{ steps.tag.outputs.changed }}
       newVersion: ${{ steps.tag.outputs.newVersion }}
 
   build:
     needs: release
-    if: ${{ needs.release.outputs.changed }} == "true"
+    if: ${{ needs.release.outputs.newVersion }} != ""
     uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@main
     with:
       publish: ${{ github.ref == 'refs/heads/master' }}
