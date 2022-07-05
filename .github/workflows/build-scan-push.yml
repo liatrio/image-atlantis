@@ -43,13 +43,13 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-     - name: Select tag
-       id: tag
-       run: |
-         if [[ "${{ needs.release.outputs.newVersion }}" == "" ]]; then
-           echo ::set-output name=imageTag::local
-         else
-           echo ::set-output name=imageTag::${{ needs.release.outputs.newVersion }}
+     - name: Set default tag
+       if: ${{ "needs.release.outputs.newVersion" == "" }}
+       run: echo ::set-output name=imageTag::local
+
+     - name: Set version tag
+       if: ${{ "needs.release.outputs.newVersion" != "" }}
+       run: echo ::set-output name=imageTag::${{ needs.release.outputs.newVersion }}
     outputs:
       imageTag: ${{ steps.tag.outputs.imageTag }}
 
