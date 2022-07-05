@@ -42,7 +42,7 @@ jobs:
     if: ${{ needs.release.outputs.newVersion }} != ""
     uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@main
     with:
-      publish: ${{ github.ref == 'refs/heads/master' }}
+      publish: ${{ github.ref == 'refs/heads/main' }}
       repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
       tag: ${{ needs.release.outputs.newVersion }}
