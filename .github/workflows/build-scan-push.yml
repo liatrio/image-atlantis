@@ -46,7 +46,7 @@ jobs:
      - name: Select tag
        id: tag
        run: |
-         if [[ ${{ needs.release.outputs.newVersion }} == "" ]]; then
+         if [[ "${{ needs.release.outputs.newVersion }}" == "" ]]; then
            echo ::set-output name=imageTag::local
          else
            echo ::set-output name=imageTag::${{ needs.release.outputs.newVersion }}
