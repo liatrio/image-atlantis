@@ -1,4 +1,5 @@
-branches: master
+branches: 
+  - main
 repositoryUrl: https://github.com/liatrio/image-atlantis.git
 plugins:
   - "@semantic-release/commit-analyzer"
