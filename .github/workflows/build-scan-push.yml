@@ -55,6 +55,7 @@ jobs:
 
   build:
     needs: tag
+    if: ${{ always() }}
     uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@build-push-typo
     with:
       publish: ${{ github.ref == 'refs/heads/main' }}
