@@ -45,13 +45,13 @@ jobs:
     steps:
      - name: Set default tag
        if: ${{ needs.release.status != 'success' }}
-       run: echo ::set-output name=imageTag::local
+       run: echo "IMAGE_TAG=local" >> $GITHUB_ENV
 
      - name: Set version tag
        if: ${{ needs.release.status == 'success' }}
-       run: echo ::set-output name=imageTag::${{ needs.release.outputs.newVersion }}
+       run: echo "IMAGE_TAG=${{ needs.release.outputs.newVersion }}" >> $GITHUB_ENV
     outputs:
-      imageTag: ${{ steps.tag.outputs.imageTag }}
+      imageTag: ${{ env.IMAGE_TAG }}
 
   build:
     needs: tag
