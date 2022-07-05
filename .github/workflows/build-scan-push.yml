@@ -44,11 +44,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Set default tag
-       if: ${{ needs.release.status != "success" }}
+       if: ${{ needs.release.status != 'success' }}
        run: echo ::set-output name=imageTag::local
 
      - name: Set version tag
-       if: ${{ needs.release.status == "success" }}
+       if: ${{ needs.release.status == 'success' }}
        run: echo ::set-output name=imageTag::${{ needs.release.outputs.newVersion }}
     outputs:
       imageTag: ${{ steps.tag.outputs.imageTag }}
