@@ -1,4 +1,6 @@
-branches: master
+branches: 
+  - main
+  - alpine-christian
 repositoryUrl: https://github.com/liatrio/image-atlantis.git
 plugins:
   - "@semantic-release/commit-analyzer"
