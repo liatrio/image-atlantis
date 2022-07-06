@@ -28,7 +28,7 @@ jobs:
         with:
           debug: true
           # GITHUB_HEAD_REF is only set during PRs, otherwise it is ""
-          dryRun: ${{ GITHUB_HEAD_REF }}
+          dryRun: ${{ github.head_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
