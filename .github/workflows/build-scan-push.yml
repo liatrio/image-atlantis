@@ -15,7 +15,6 @@ on:
 
 jobs:
   release:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -24,42 +23,44 @@ jobs:
           fetch-depth: 0
 
       - name: Release
+        id: tag
         uses: liatrio/github-actions/conventional-release@master
         with:
           debug: true
+          dryRun: ${{ github.ref != 'refs/heads/main' }} # v0.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get Release Tag
-        id: tag
-        run: |
-          echo ::set-output name=newVersion::$(git tag --points-at HEAD)
+      # - name: Get Release Tag
+      #   id: tag
+      #   # Grab the most recent tag
+      #   run: |
+      #     echo `git tag --points-at HEAD`
+      #     echo ::set-output name=newVersion::$(git tag --points-at HEAD)
 
     outputs:
       newVersion: ${{ steps.tag.outputs.newVersion }}
 
-  tag:
-    needs: release
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    steps:
-     - name: Set default tag
-       if: ${{ needs.release.status != 'success' }}
-       run: echo "IMAGE_TAG=local" >> $GITHUB_ENV
+  # tag:
+  #   needs: release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #    - name: Set default tag
+  #      if: ${{ needs.release.status != 'success' }}
+  #      run: echo "IMAGE_TAG=local" >> $GITHUB_ENV
 
-     - name: Set version tag
-       if: ${{ needs.release.status == 'success' }}
-       run: echo "IMAGE_TAG=${{ needs.release.outputs.newVersion }}" >> $GITHUB_ENV
-    outputs:
-      imageTag: ${{ env.IMAGE_TAG }}
+  #    - name: Set version tag
+  #      if: ${{ needs.release.status == 'success' }}
+  #      run: echo "IMAGE_TAG=${{ needs.release.outputs.newVersion }}" >> $GITHUB_ENV
+  #   outputs:
+  #     imageTag: ${{ env.IMAGE_TAG }}
 
   build:
-    needs: tag
-    if: ${{ always() }}
-    uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@build-push-typo
+    needs: release
+    uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@main
     with:
       publish: ${{ github.ref == 'refs/heads/main' }}
-      repository: ghcr.io
+      repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
       tag: ${{ needs.tag.outputs.imageTag }}
       image-name: ${{ github.event.repository.name }}
