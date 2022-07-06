@@ -31,29 +31,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Get Release Tag
-      #   id: tag
-      #   # Grab the most recent tag
-      #   run: |
-      #     echo `git tag --points-at HEAD`
-      #     echo ::set-output name=newVersion::$(git tag --points-at HEAD)
-
     outputs:
       newVersion: ${{ steps.tag.outputs.newVersion }}
-
-  # tag:
-  #   needs: release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #    - name: Set default tag
-  #      if: ${{ needs.release.status != 'success' }}
-  #      run: echo "IMAGE_TAG=local" >> $GITHUB_ENV
-
-  #    - name: Set version tag
-  #      if: ${{ needs.release.status == 'success' }}
-  #      run: echo "IMAGE_TAG=${{ needs.release.outputs.newVersion }}" >> $GITHUB_ENV
-  #   outputs:
-  #     imageTag: ${{ env.IMAGE_TAG }}
 
   build:
     needs: release
