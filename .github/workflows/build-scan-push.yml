@@ -27,7 +27,8 @@ jobs:
         uses: liatrio/github-actions/conventional-release@master
         with:
           debug: true
-          dryRun: ${{ github.ref != 'refs/heads/main' }}
+          # GITHUB_HEAD_REF is only set during PRs, otherwise it is ""
+          dryRun: ${{ GITHUB_HEAD_REF }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
