@@ -59,7 +59,7 @@ jobs:
     uses: liatrio/github-workflows/.github/workflows/build-scan-push.yaml@build-push-typo
     with:
       publish: ${{ github.ref == 'refs/heads/main' }}
-      repository: ghcr.io/liatrio
+      repository: ghcr.io
       registry-username: ${{ github.repository_owner }}
       tag: ${{ needs.tag.outputs.imageTag }}
       image-name: ${{ github.event.repository.name }}
