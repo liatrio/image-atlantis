@@ -27,10 +27,9 @@ jobs:
         uses: liatrio/github-actions/conventional-release@master
         with:
           debug: true
-          dryRun: ${{ github.ref != 'refs/heads/main' }} # v0.1.1
+          dryRun: ${{ github.ref != 'refs/heads/main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     outputs:
       newVersion: ${{ steps.tag.outputs.newVersion }}
 
@@ -41,7 +40,7 @@ jobs:
       publish: ${{ github.ref == 'refs/heads/main' }}
       repository: ghcr.io/liatrio
       registry-username: ${{ github.repository_owner }}
-      tag: ${{ needs.tag.outputs.imageTag }}
+      tag: ${{ needs.release.outputs.newVersion }}
       image-name: ${{ github.event.repository.name }}
       nofail: true
     secrets:
