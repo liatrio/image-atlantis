@@ -45,4 +45,4 @@ jobs:
       image-name: ${{ github.event.repository.name }}
       nofail: true
     secrets:
-      registry-password: ${{ secrets.GITHUB_TOKEN }}
+      registry-password: ${{ secrets.AW_PAT }}
