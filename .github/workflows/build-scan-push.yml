@@ -40,7 +40,7 @@ jobs:
     with:
       publish: ${{ github.ref == 'refs/heads/main' }}
       repository: ghcr.io/liatrio
-      registry-username: ${{ github.repository_owner }}
+      registry-username: ${{ github.actor }}
       tag: ${{ needs.release.outputs.newVersion }}
       image-name: ${{ github.event.repository.name }}
       nofail: true
