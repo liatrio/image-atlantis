@@ -5,7 +5,7 @@ Atlantis is a standalone applicaton that can be deployed into one of your enviro
 For an example of Atlantis in action there is [this](https://youtu.be/TmIPWda0IKg) short video.
 
 ## What is installed on this image?
-- Version [0.19.6](https://github.com/runatlantis/atlantis) of the Atlantis application.
-- Version [0.38.4](https://terragrunt.gruntwork.io/docs/getting-started/install/) of Terragrunt.
+- Version [0.19.7](https://github.com/runatlantis/atlantis) of the Atlantis application.
+- Version [0.38.5](https://terragrunt.gruntwork.io/docs/getting-started/install/) of Terragrunt.
 - Whatever version of Terraform you configure Atlantis to use.
 
