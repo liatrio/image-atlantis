@@ -1,6 +1,7 @@
 name: Build, Scan
 
 on:
+  # Allows scheduling via cronjob
   schedule:
   - cron: "0 13 * * 1-5"
 
@@ -11,7 +12,7 @@ jobs:
       publish: false
       repository: ghcr.io
       registry-username: ${{ github.actor }}
-      tag: ${{ needs.release.outputs.newVersion }}
+      tag: "test"
       image-name: ${{ github.event.repository.name }}
       nofail: true
     secrets:
